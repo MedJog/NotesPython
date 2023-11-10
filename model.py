@@ -54,3 +54,27 @@ def search_date(date: str) -> list[dict]:
         if date == date1:
             result.append(note)
     return result
+
+    # открыть файл
+def open_file(): 
+    with open(path, 'r', encoding = 'UTF-8') as file:
+        data = file.readlines()
+        # print(os.stat(path).st_size)
+    if (os.stat(path).st_size == 0):
+        print("Приложение открыто. У Вас пока нет заметок.")
+    else:
+        for note in data:
+            note_id, title, msg, date = note.strip().split(';')
+            notes.append({'id': note_id, 'title': title, 'msg': msg, 'date': date})
+        print("Приложение открыто.")
+    
+# сохранить файл  
+def save_file(notes):
+    with open(path, "w", encoding = 'UTF-8') as file:
+        file.write('')
+    with open(path, "a", encoding = 'UTF-8') as file:
+        for note in notes:
+            file.write(str(note.get('id'))+';'
+                        + note.get('title')+';'
+                        + note.get('msg')+';'
+                        + str(note.get('date'))+'\n')
